@@ -1,0 +1,24 @@
+topicprefix = /topic/
+main_collective = mcollective
+collectives = mcollective
+libdir = /usr/share/mcollective/plugins
+logger_type = console
+loglevel = warn
+
+securityprovider = psk
+plugin.psk = unset
+
+connector = rabbitmq
+direct_addressing = 1
+
+plugin.rabbitmq.vhost = <%= @mcollective_vhost %>
+plugin.rabbitmq.pool.size = 1
+
+plugin.rabbitmq.pool.1.host = <%= @stomp_host %>
+plugin.rabbitmq.pool.1.port = 61613
+plugin.rabbitmq.pool.1.user = <%= @mcollective_user %>
+plugin.rabbitmq.pool.1.password = <%= @mcollective_pass %>
+
+# Facts
+factsource = yaml
+plugin.yaml = /etc/mcollective/facts.yaml

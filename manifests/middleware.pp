@@ -10,7 +10,7 @@ class mcollective::middleware(
   include rabbitmq::stomp
   
   class{'rabbitmq::service':
-    ensure => $ensure
+    ensure => 'running'
   }
 
   rabbitmq::vhost{$stomp_vhost : }

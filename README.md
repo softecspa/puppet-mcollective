@@ -9,14 +9,24 @@ This module can be used for:
  - Install and configure MCollective agent
   
 # Middleware
-  include mcollective::middleware
+class { 'mcollective::middleware':
+    stomp_vhost => $::mcollective_vhost,
+    stomp_user => $::mcollective_user,
+    stomp_pass => $::mcollective_pass
+}
 
 # Server
-  class { 'mcollective':
-    stomp_host => 'rabbitmq-srv.domain.com'
-  }
+class { 'mcollective':
+    stomp_host => 'stop-srv.domain.com',
+    stomp_vhost => $::mcollective_vhost,
+    stomp_user => $::mcollective_user,
+    stomp_pass => $::mcollective_pass
+}
 
 # Agent
-  class { 'mcollective::agent':
-    stomp_host => 'rabbitmq-srv.domain.com'
-  }
+class { 'mcollective::agent':
+    stomp_host => 'stop-srv.domain.com',
+    stomp_vhost => $::mcollective_vhost,
+    stomp_user => $::mcollective_user,
+    stomp_pass => $::mcollective_pass
+}

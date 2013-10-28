@@ -33,7 +33,7 @@ class mcollective(
     package {'stomp':
       ensure   => '1.2.2',
       provider => gem,
-      before   => Package['mcollective-client'],
+      before   => Package['mcollective'],
     }
   }
 

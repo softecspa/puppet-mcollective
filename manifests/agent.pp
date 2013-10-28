@@ -2,7 +2,7 @@ class mcollective::agent(
   $ensure=present,
   $stomp_host,
   $stomp_user,
-  $stopm_password,
+  $stomp_pass,
   $stomp_port=61613
 )
 {

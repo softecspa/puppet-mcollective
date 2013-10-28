@@ -1,6 +1,9 @@
 class mcollective::agent(
   $ensure=present,
-  $stomp_host
+  $stomp_host,
+  $stomp_user,
+  $stopm_password,
+  $stomp_port=61613
 )
 {
   if ! defined(Package['stomp']) {

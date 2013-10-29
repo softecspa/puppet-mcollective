@@ -20,6 +20,12 @@ class mcollective(
     fail("ensure parameter must be present, running, removed or stopped, got: $ensure")
   }
 
+  if ! defined(Class['mcollective::common']) {
+    class {'mcollective::common':
+      ensure => $ensure
+    }
+  }
+
   file{"/etc/mcollective/facts.yaml":
     owner    => root,
     group    => root,
@@ -29,21 +35,13 @@ class mcollective(
     require => Package['mcollective'],
   }
 
-  if ! defined(Package['stomp']) {
-    package {'stomp':
-      ensure   => '1.2.2',
-      provider => gem,
-      before   => Package['mcollective'],
-    }
-  }
-
   apt::pin {
-    'mcollective':               version => $mcollective_version;
-    'mcollective-common':        version => $mcollective_version;
+    'mcollective':
+      version => $mcollective_version,
+      require => Class['mcollective::common'];
   } ->
   package {
-    'mcollective':               ensure => $mcollective_version;
-    'mcollective-common':        ensure => $mcollective_version;
+    'mcollective':  ensure => $mcollective_version;
   }
 
   file { "mcollective-server.cfg":

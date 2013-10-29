@@ -7,22 +7,16 @@ class mcollective::agent(
   $stomp_port=61613
 )
 {
-  if ! defined(Package['stomp']) {
-    package {'stomp':
-      ensure   => '1.2.2',
-      provider => gem,
-      before   => Package['mcollective-client'],
-    }
-  }
-
-  if ! defined (Package['mcollective-common']) {
-    apt::pin {
-      'mcollective-common': version => $mcollective::mcollective_version;
+  if ! defined(Class['mcollective::common']) {
+    class {'mcollective::common':
+      ensure => $ensure
     }
   }
 
   apt::pin {
-    'mcollective-client': version => $mcollective::mcollective_version;
+  'mcollective-client':
+      version => $mcollective_version,
+      require => Class['mcollective::common'];
   } ->
   package {
     'mcollective-client': ensure => $mcollective::mcollective_version;

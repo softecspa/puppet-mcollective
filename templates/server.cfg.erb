@@ -2,14 +2,11 @@ topicprefix = /topic/
 main_collective = mcollective
 collectives = mcollective
 libdir = /usr/share/mcollective/plugins
-logfile = /var/log/mcollective.log
+logfile = /var/log/mcollective_server.log
 loglevel = info
 daemonize = 1
 
-# Plugins
-securityprovider = psk
-plugin.psk = unset
-
+# Connector
 connector = rabbitmq
 direct_addressing = 1
 
@@ -20,6 +17,10 @@ plugin.rabbitmq.pool.1.host = <%= @stomp_host %>
 plugin.rabbitmq.pool.1.port = <%= @stomp_port %>
 plugin.rabbitmq.pool.1.user = <%= @stomp_user %>
 plugin.rabbitmq.pool.1.password = <%= @stomp_pass %>
+
+# Plugins
+securityprovider = psk
+plugin.psk = unset
 
 # Facts
 factsource = yaml

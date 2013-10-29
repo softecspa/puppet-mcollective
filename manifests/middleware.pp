@@ -18,6 +18,7 @@ class mcollective::middleware(
   rabbitmq::user{$stomp_user:
     vhost => $stomp_vhost,
     password => $stomp_pass,
+    administrator => true,
     require => Rabbitmq::Vhost[$stomp_vhost]
   }
 

@@ -28,5 +28,6 @@ class mcollective::agent(
     group   => 'root',
     mode    => '0750',
     content => template('mcollective/client.cfg.erb')
+    require => Class['mcollective::common']
   }
 }

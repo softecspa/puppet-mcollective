@@ -13,11 +13,6 @@ class mcollective::common (
     fail("ensure parameter must be present, running, removed or stopped, got: $ensure")
   }
 
-  'mcollective':
-      version => $mcollective_version,
-      require => Class['mcollective::common'];
-  }
-
   file{"/etc/mcollective":
     ensure   => directory,
     owner    => root,
@@ -42,7 +37,9 @@ class mcollective::common (
   }
 
   apt::pin {
-    'mcollective-common':   version => $mcollective::mcollective_version;
+    'mcollective-common':
+      version => $mcollective::mcollective_version,
+      require => Package['stomp'];
   } ->
   package {
     'mcollective-common':   ensure => $mcollective::mcollective_version;

@@ -26,15 +26,6 @@ class mcollective(
     }
   }
 
-  file{"/etc/mcollective/facts.yaml":
-    owner    => root,
-    group    => root,
-    mode     => 400,
-    loglevel => debug,
-    content  => inline_template("<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime_seconds|timestamp|free)/ }.to_yaml %>"), # exclude rapidly changing facts
-    require => Package['mcollective'],
-  }
-
   apt::pin {
     'mcollective':
       version => $mcollective_version,
@@ -62,4 +53,18 @@ class mcollective(
     require    => Package['mcollective'],
   }
 
+  file{
+    "/etc/mcollective/clients":
+      ensure   => directory,
+      owner    => root,
+      group    => root,
+      mode     => 755,
+      require  => Package['mcollective'];
+    "/etc/mcollective/server_certs":
+      ensure   => directory,
+      owner    => root,
+      group    => root,
+      mode     => 755,
+      require  => Package['mcollective'];
+  }
 }

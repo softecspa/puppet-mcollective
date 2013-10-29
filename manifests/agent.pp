@@ -15,7 +15,7 @@ class mcollective::agent(
 
   apt::pin {
   'mcollective-client':
-      version => $mcollective_version,
+      version => $mcollective::mcollective_version,
       require => Class['mcollective::common'];
   } ->
   package {
@@ -27,7 +27,16 @@ class mcollective::agent(
     owner   => 'root',
     group   => 'root',
     mode    => '0750',
-    content => template('mcollective/client.cfg.erb')
-    require => Class['mcollective::common']
+    content => template('mcollective/client.cfg.erb'),
+    require => Package['mcollective-client'],
+  }
+
+  file{
+    "/etc/mcollective/client_certs":
+      ensure   => directory,
+      owner    => root,
+      group    => root,
+      mode     => 755,
+      require  => Package['mcollective-client'],
   }
 }

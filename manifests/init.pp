@@ -4,7 +4,8 @@ class mcollective(
   $stomp_vhost,
   $stomp_user,
   $stomp_pass,
-  $stomp_port=61613
+  $stomp_port=61613,
+  $ssl_plugin=false,
 )
 {
 

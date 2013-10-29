@@ -4,7 +4,8 @@ class mcollective::agent(
   $stomp_vhost,
   $stomp_user,
   $stomp_pass,
-  $stomp_port=61613
+  $stomp_port=61613,
+  $ssl_plugin=false,
 )
 {
   if ! defined(Class['mcollective::common']) {

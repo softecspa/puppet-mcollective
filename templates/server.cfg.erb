@@ -25,7 +25,7 @@ plugin.ssl_server_private = /etc/mcollective/server_certs/key.pem
 plugin.ssl_server_public = /etc/mcollective/server_certs/cert.pem
 plugin.ssl_client_cert_dir = /etc/mcollective/clients
 <% else %>
-securityprovider = ssl
+securityprovider = psk
 plugin.psk = unset
 <% end %>
 

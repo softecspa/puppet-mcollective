@@ -14,13 +14,12 @@ class mcollective::agent(
     }
   }
 
-  apt::pin {
-  'mcollective-client':
-      version => $mcollective::mcollective_version,
-      require => Class['mcollective::common'];
+  apt::pin { 'mcollective-client':
+      version => $mcollective::mcollective_version,  
   } ->
-  package {
-    'mcollective-client': ensure => $mcollective::mcollective_version;
+  package { 'mcollective-client': 
+    ensure => $mcollective::mcollective_version,
+    require => Class['mcollective::common'];
   }
 
   file { "mcollective-client.cfg":

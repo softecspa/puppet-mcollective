@@ -41,13 +41,11 @@ class mcollective::common (
     }
   }
 
-  apt::pin {
-    'mcollective-common':
+  apt::pin { 'mcollective-common':
       version => $mcollective::mcollective_version,
-      require => Package['stomp'];
   } ->
-  package {
-    'mcollective-common':   ensure => $mcollective::mcollective_version;
+  package { 'mcollective-common':   
+      ensure => $mcollective::mcollective_version;
   }
 
 }

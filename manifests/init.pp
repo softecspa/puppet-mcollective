@@ -27,16 +27,15 @@ class mcollective(
     }
   }
 
-  apt::pin {
-    'mcollective':
+  apt::pin {'mcollective':
       version => $mcollective_version,
       require => Class['mcollective::common'];
   } ->
-  package {
-    'mcollective':  ensure => $mcollective_version;
+  package {'mcollective': 
+    ensure => $mcollective_version;
   }
 
-  file { "mcollective-server.cfg":
+  file { 'mcollective-server.cfg':
     path  => "/etc/mcollective/server.cfg",
     owner   => 'root',
     group   => 'root',

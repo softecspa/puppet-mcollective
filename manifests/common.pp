@@ -29,10 +29,15 @@ class mcollective::common (
     require => File['/etc/mcollective'],
   }
 
+  if ! defined(Package['rubygems']) {
+    package {'rubygems': }
+  }
+
   if ! defined(Package['stomp']) {
     package {'stomp':
       ensure   => '1.2.2',
-      provider => gem
+      provider => gem,
+      require => Package['rubygems'];
     }
   }
 

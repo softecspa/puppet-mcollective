@@ -1,3 +1,11 @@
+# == class mcollective::agent
+#
+#  Install Mcollective Client
+#
+# === Params
+#
+# === Examples
+#
 class mcollective::agent(
   $ensure=present,
   $stomp_host,
@@ -15,15 +23,15 @@ class mcollective::agent(
   }
 
   apt::pin { 'mcollective-client':
-      version => $mcollective::mcollective_version,  
+      version => $mcollective::mcollective_version,
   } ->
-  package { 'mcollective-client': 
-    ensure => $mcollective::mcollective_version,
+  package { 'mcollective-client':
+    ensure  => $mcollective::mcollective_version,
     require => Class['mcollective::common'];
   }
 
-  file { "mcollective-client.cfg":
-    path  => "/etc/mcollective/client.cfg",
+  file { 'mcollective-client.cfg':
+    path    => '/etc/mcollective/client.cfg',
     owner   => 'root',
     group   => 'root',
     mode    => '0750',
@@ -31,12 +39,11 @@ class mcollective::agent(
     require => Package['mcollective-client'],
   }
 
-  file{
-    "/etc/mcollective/client_certs":
-      ensure   => directory,
-      owner    => root,
-      group    => root,
-      mode     => 755,
-      require  => Package['mcollective-client'],
+  file{ '/etc/mcollective/client_certs':
+    ensure   => directory,
+    owner    => root,
+    group    => root,
+    mode     => '0755',
+    require  => Package['mcollective-client'],
   }
 }

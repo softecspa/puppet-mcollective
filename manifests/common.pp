@@ -1,8 +1,15 @@
+# == class mcollective::common
+#
+#  Install Mcollective common files
+#
+# === Params
+#
+# === Examples
+#
 class mcollective::common (
   $ensure=present
 )
 {
-
   if $ensure in [ 'present', 'running' ] {
     $ensure_real = 'running'
     $enable_real = true
@@ -10,41 +17,41 @@ class mcollective::common (
     $ensure_real = 'stopped'
     $enable_real = false
   } else {
-    fail("ensure parameter must be present, running, removed or stopped, got: $ensure")
+    fail("ensure must be present, running, removed or stopped, got: ${ensure}")
   }
 
-  file{"/etc/mcollective":
+  file{ '/etc/mcollective':
     ensure   => directory,
     owner    => root,
     group    => root,
-    mode     => 755,
+    mode     => '0755',
   }
 
-  file{"/etc/mcollective/facts.yaml":
-    owner    => root,
-    group    => root,
-    mode     => 644,
-    loglevel => debug,
-    content  => inline_template("<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime_seconds|timestamp|free)/ }.to_yaml %>"), # exclude rapidly changing facts
-    require => File['/etc/mcollective'],
+  file{ '/etc/mcollective/facts.yaml':
+    owner     => root,
+    group     => root,
+    mode      => '0644',
+    loglevel  => debug,
+    content   => inline_template("<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime_seconds|timestamp|free)/ }.to_yaml %>"), # exclude rapidly changing facts
+    require   => File['/etc/mcollective'],
   }
 
   if ! defined(Package['rubygems']) {
-    package {'rubygems': }
+    package { 'rubygems': }
   }
 
   if ! defined(Package['stomp']) {
-    package {'stomp':
-      ensure   => '1.2.2',
-      provider => gem,
-      require => Package['rubygems'];
+    package { 'stomp':
+      ensure    => '1.2.2',
+      provider  => gem,
+      require   => Package['rubygems'];
     }
   }
 
   apt::pin { 'mcollective-common':
       version => $mcollective::mcollective_version,
   } ->
-  package { 'mcollective-common':   
+  package { 'mcollective-common':
       ensure => $mcollective::mcollective_version;
   }
 

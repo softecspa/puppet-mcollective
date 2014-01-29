@@ -1,3 +1,11 @@
+# == class mcollective
+#
+#  Setup Mcollective
+#
+# === Params
+#
+# === Examples
+#
 class mcollective(
   $ensure=present,
   $stomp_host,
@@ -18,7 +26,7 @@ class mcollective(
     $ensure_real = 'stopped'
     $enable_real = false
   } else {
-    fail("ensure parameter must be present, running, removed or stopped, got: $ensure")
+    fail("ensure must be present, running, removed or stopped, got: ${ensure}")
   }
 
   if ! defined(Class['mcollective::common']) {
@@ -29,20 +37,20 @@ class mcollective(
 
   apt::pin {'mcollective':
       version => $mcollective_version,
-      require => Class['mcollective::common'];
   } ->
-  package {'mcollective': 
-    ensure => $mcollective_version;
+  package {'mcollective':
+    ensure  => $mcollective_version,
+    require => Class['mcollective::common'];
   }
 
   file { 'mcollective-server.cfg':
-    path  => "/etc/mcollective/server.cfg",
+    path    => '/etc/mcollective/server.cfg',
     owner   => 'root',
     group   => 'root',
     mode    => '0750',
     content => template('mcollective/server.cfg.erb'),
     require => Package['mcollective'],
-    notify => Service['mcollective']
+    notify  => Service['mcollective']
   }
 
   service { 'mcollective':
@@ -53,18 +61,18 @@ class mcollective(
     require    => Package['mcollective'],
   }
 
-  file{
-    "/etc/mcollective/clients":
+  file {
+    '/etc/mcollective/clients':
       ensure   => directory,
       owner    => root,
       group    => root,
-      mode     => 755,
+      mode     => '0755',
       require  => Package['mcollective'];
-    "/etc/mcollective/server_certs":
+    '/etc/mcollective/server_certs':
       ensure   => directory,
       owner    => root,
       group    => root,
-      mode     => 755,
+      mode     => '0755',
       require  => Package['mcollective'];
   }
 }

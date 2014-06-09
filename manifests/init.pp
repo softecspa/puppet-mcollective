@@ -1,6 +1,6 @@
 # == class mcollective
 #
-#  Setup Mcollective
+#  Setup Mcollective server
 #
 # === Params
 #
@@ -13,11 +13,12 @@ class mcollective(
   $stomp_user,
   $stomp_pass,
   $stomp_port=61613,
+  $ssl_middleware=false,  
   $ssl_plugin=false,
 )
 {
 
-  $mcollective_version = '2.2.4-1'
+  $mcollective_version = '2.5.1-1puppetlabs1'
 
   if $ensure in [ 'present', 'running' ] {
     $ensure_real = 'running'

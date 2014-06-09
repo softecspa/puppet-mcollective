@@ -1,8 +1,17 @@
+# == class mcollective::middleware
+#
+#  Setup a middleware used by mcollective
+#
+# === Params
+#
+# === Examples
+#
 class mcollective::middleware(
   $ensure=present,
   $stomp_vhost,
   $stomp_user,
-  $stomp_pass
+  $stomp_pass,
+  $ssl=false
 ) {
 
   include rabbitmq

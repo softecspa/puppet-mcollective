@@ -1,18 +1,19 @@
-# == class mcollective::agent
+# == class mcollective::client
 #
-#  Install Mcollective Client
+#  Install Mcollective Client, used on workstations
 #
 # === Params
 #
 # === Examples
 #
-class mcollective::agent(
+class mcollective::client(
   $ensure=present,
   $stomp_host,
   $stomp_vhost,
   $stomp_user,
   $stomp_pass,
   $stomp_port=61613,
+  $ssl_middleware=false,
   $ssl_plugin=false,
 )
 {

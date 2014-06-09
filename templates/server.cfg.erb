@@ -18,6 +18,14 @@ plugin.rabbitmq.pool.1.port = <%= @stomp_port %>
 plugin.rabbitmq.pool.1.user = <%= @stomp_user %>
 plugin.rabbitmq.pool.1.password = <%= @stomp_pass %>
 
+<% if @ssl_middleware %>
+plugin.rabbitmq.pool.1.ssl = 1
+plugin.rabbitmq.pool.1.ssl.fallback = 0
+plugin.rabbitmq.pool.1.ssl.ca = /var/lib/puppet/ssl/certs/ca.pem
+plugin.rabbitmq.pool.1.ssl.cert  = /var/lib/puppet/ssl/certs/<%= hostname %>.pem
+plugin.rabbitmq.pool.1.ssl.key = /var/lib/puppet/ssl/private_keys/<%= hostname %>.pem
+<% end %>
+
 # Plugins
 <% if ssl_plugin=="true" %>
 securityprovider = ssl

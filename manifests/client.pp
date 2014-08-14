@@ -23,7 +23,7 @@ class mcollective::client(
     }
   }
 
-  apt_puppetlabs::pin { 'mcollective-client':
+  apt::pin { 'mcollective-client':
     packages  => 'mcollective-client',
     version   => $mcollective::mcollective_version,
     priority  => '1001'

@@ -36,7 +36,7 @@ class mcollective(
     }
   }
 
-  apt_puppetlabs::pin {'mcollective':
+  apt::pin {'mcollective':
       packages  => 'mcollective',
       version   => $mcollective_version,
       priority  => '1001'

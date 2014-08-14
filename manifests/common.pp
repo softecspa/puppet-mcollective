@@ -48,7 +48,7 @@ class mcollective::common (
     }
   }
 
-  apt_puppetlabs::pin { 'mcollective-common':
+  apt::pin { 'mcollective-common':
     packages  => 'mcollective-common',
     version   => $mcollective::mcollective_version,
     priority  => '1001'

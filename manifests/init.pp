@@ -13,7 +13,7 @@ class mcollective(
   $stomp_user,
   $stomp_pass,
   $stomp_port=61613,
-  $ssl_middleware=false,  
+  $ssl_middleware=false,
   $ssl_plugin=false,
 )
 {
@@ -36,8 +36,10 @@ class mcollective(
     }
   }
 
-  apt::pin {'mcollective':
-      version => $mcollective_version,
+  apt_puppetlabs::pin {'mcollective':
+      packages  => 'mcollective',
+      version   => $mcollective_version,
+      priority  => '1001'
   } ->
   package {'mcollective':
     ensure  => $mcollective_version,

@@ -18,8 +18,6 @@ class mcollective(
 )
 {
 
-  $mcollective_version = '2.5.1-1puppetlabs1'
-
   if $ensure in [ 'present', 'running' ] {
     $ensure_real = 'running'
     $enable_real = true
@@ -36,13 +34,8 @@ class mcollective(
     }
   }
 
-  apt::pin {'mcollective':
-      packages  => 'mcollective',
-      version   => $mcollective_version,
-      priority  => '1001'
-  } ->
   package {'mcollective':
-    ensure  => $mcollective_version,
+    ensure  => present,
     require => Class['mcollective::common'];
   }
 

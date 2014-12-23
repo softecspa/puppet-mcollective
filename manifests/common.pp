@@ -48,13 +48,8 @@ class mcollective::common (
     }
   }
 
-  apt::pin { 'mcollective-common':
-    packages  => 'mcollective-common',
-    version   => $mcollective::mcollective_version,
-    priority  => '1001'
-  } ->
   package { 'mcollective-common':
-      ensure => $mcollective::mcollective_version;
+      ensure => present;
   }
 
 }

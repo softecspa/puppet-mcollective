@@ -39,6 +39,7 @@ class mcollective::common (
   if ($::lsbdistrelease < '14.04') {
     if ! defined(Package['rubygems']) {
       package { 'rubygems': }
+    }
   }
 
   if ! defined(Package['stomp']) {

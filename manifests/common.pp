@@ -40,13 +40,20 @@ class mcollective::common (
     if ! defined(Package['rubygems']) {
       package { 'rubygems': }
     }
-  }
-
-  if ! defined(Package['stomp']) {
-    package { 'stomp':
-      ensure    => '1.2.2',
-      provider  => gem,
-      require   => Package['rubygems'];
+    
+    if ! defined(Package['stomp']) {
+      package { 'stomp':
+        #ensure    => '1.2.2',
+        provider  => gem,
+        require   => Package['rubygems'];
+      }
+    
+    }
+  } else {
+    if ! defined(Package['stomp']) {
+      package { 'stomp':
+        provider  => gem,
+      }
     }
   }
 

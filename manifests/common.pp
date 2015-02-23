@@ -36,8 +36,9 @@ class mcollective::common (
     require   => File['/etc/mcollective'],
   }
 
-  if ! defined(Package['rubygems']) {
-    package { 'rubygems': }
+  if ($::lsbdistrelease < '14.04') {
+    if ! defined(Package['rubygems']) {
+      package { 'rubygems': }
   }
 
   if ! defined(Package['stomp']) {
